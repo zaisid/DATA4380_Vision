@@ -22,9 +22,15 @@ The data required minimal processing. Python scripts were used to organize the i
 
 #### Data Visualization
 
-![Examples of given image data.](/Images/example_images.png)
+Examples of given image data.
 
-![Examples of applied augmentations.](/Images/example_augmentation2.png)
+![](/Images/example_images.png)
+
+
+Examples of applied augmentations.
+
+![](/Images/example_augmentation2.png)
+
 ![](/Images/example_augmentation.png)
 
 
@@ -40,17 +46,24 @@ With Colab's environment and resourcing, the image_size was increased to (384, 3
 The Base ResNet model was trained with 8 epochs. This training session took especially long, taking over 20 mins per epoch. This model was supplemented with augmented image data and trained for an additional 12 epochs (which took approximately 6 mins per epoch).
 The other models utilized (i.e., MobileNetV2 and EfficientNetB1) trained with a similar schedule to the augmented model; 10 epochs each. Training was typically stopped earlier than was ideal (i.e., before loss could plateau), at an arbitrarily set limit, due to time and processing constraints. Initial difficulties, including lost runtime and significantly long training durations, were mitigated mostly through limiting the number of epochs, prefetching the data, switching to Google Colab from local/Jupyter notebook for the brunt of training, as well as eventually exploring smaller models.
 
+Base ResNet model loss curve
 
-![Base ResNet model loss curve](/Images/BaseModel_loss.png)
-
-
-![Augmented model loss curve (noticeably inefficient)](/Images/Augmented_loss.png)
+![](/Images/BaseModel_loss.png)
 
 
-![EfficientNet loss curve](/Images/EfficientNet_loss.png)
+Augmented model loss curve (noticeably inefficient)
+
+![](/Images/Augmented_loss.png)
 
 
-![MobileNet model loss curve](/Images/MobileNet_loss.png)
+EfficientNet loss curve
+
+![](/Images/EfficientNet_loss.png)
+
+
+MobileNet model loss curve
+
+![](/Images/MobileNet_loss.png)
 
 
 
@@ -61,12 +74,18 @@ The primary performance metric used during training was accuracy. Since this was
 
 ROC curve analysis comparison was also taken, the primary metric being the macro-average between all classes (since all classes are evenly represented). When comparing Base ResNet vs. Augmented model, the Base model's AUC score was greater. This also contributed to dismissing the value of the current augmentations. 
 
-!["Base Model vs. Augmented Model ROC Curves"](/Images/BaseVsAugment_ROC.png)
+Base Model vs. Augmented Model ROC Curves
+
+![](/Images/BaseVsAugment_ROC.png)
+
 
 A ROC curve comparison was also done between the Base ResNet model, EfficientNet, and MobileNet. The highest performing model being MobileNet (macro-average AUC = 0.96), EfficientNet performed the worst of the three (macro-average AUC = 0.83).
 
 
-!["Model ROC Curve Comparison"](/Images/Model_Comparison_ROC.png)
+Model ROC Curve Comparison
+
+![](/Images/Model_Comparison_ROC.png)
+
 
 It should be noted that due to the limited nature of the dataset, the same data were used for both validation and testing sets, introducing the possibility of leakage, which could inflate metrics/results.
 

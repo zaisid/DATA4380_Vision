@@ -36,12 +36,12 @@ Examples of applied augmentations.
 
 ### Problem Formation
 
-The input would be any given image, the output would be teh predicted writer/class it belonged to. The initial modle trained was a ResNet50V2 model, supplemented to support a multiclass problem. This was the first pick because it seemed to balance size, performance, and time investments. Other models trained were EfficientNetB1 and MobileNetV2. These were primarily chosen because they were smaller and faster than ResNet whlie promising similar results. The adam optimizer function was used for all 3 models. For most models, the image size used was (384, 384) and the batch size was set at 18; this is exceptioned by the very first model, run in a local environment, with image sizes at (180, 180) and batch sizes of 8.
+The input would be any given image, the output would be the predicted writer/class it belonged to. The initial model trained was a ResNet50V2 model, supplemented to support a multi-class problem. This was the first pick because it seemed to balance size, performance, and time investments. Other models trained were EfficientNetB1 and MobileNetV2. These were primarily chosen because they were smaller and faster than ResNet while promising similar results. The adam optimizer function was used for all 3 models. For most models, the image size used was (384, 384) and the batch size was set at 18; this is exceptioned by the very first model, run in a local environment, with image sizes at (180, 180) and batch sizes of 8.
 
 
 ### Training
 
-The original attempt (in local jupyter environment) trained a ResNet50V2 model on 10 epochs with an image size of (224,224) and batch sizes of 8. This model trained relatively quickly, in about 12 minutes.
+The original attempt (in local Jupyter environment) trained a ResNet50V2 model on 10 epochs with an image size of (224,224) and batch sizes of 8. This model trained relatively quickly, in about 12 minutes.
 With Colab's environment and resourcing, the image_size was increased to (384, 384) and batch size to 18. These hyperparameters were used for the remainder of the models.
 The Base ResNet model was trained with 8 epochs. This training session took especially long, taking over 20 mins per epoch. This model was supplemented with augmented image data and trained for an additional 12 epochs (which took approximately 6 mins per epoch).
 The other models utilized (i.e., MobileNetV2 and EfficientNetB1) trained with a similar schedule to the augmented model; 10 epochs each. Training was typically stopped earlier than was ideal (i.e., before loss could plateau), at an arbitrarily set limit, due to time and processing constraints. Initial difficulties, including lost runtime and significantly long training durations, were mitigated mostly through limiting the number of epochs, prefetching the data, switching to Google Colab from local/Jupyter notebook for the brunt of training, as well as eventually exploring smaller models.
@@ -92,12 +92,12 @@ It should be noted that due to the limited nature of the dataset, the same data 
 
 ### Conclusions
 
-This project was an exploration of writer identification as an image classification problem using CNNs. While the task initially seemed approachable, especially with promising pre-trained architectures like ResNet50V2, practical challenges quickly emerged, including long training times, unstable loss behavior, and difficulty tuning for 90 unique classes. These obstacles ultimately limited the utility and training potential of the models and made it clear that deeper, heavier models are not always the best fit. Lighter models like MobileNetV2 and EfficientNetB1 trained faster, introducing more possibility for improvement, outperformed ResNet50V2 in accuracy and performed equally and/or better wth concern to AUC metrics. Ultimately, it was MobileNetV2 that yielded teh best results. 
+This project was an exploration of writer identification as an image classification problem using CNNs. While the task initially seemed approachable, especially with promising pre-trained architectures like ResNet50V2, practical challenges quickly emerged, including long training times, unstable loss behavior, and difficulty tuning for 90 unique classes. These obstacles ultimately limited the utility and training potential of the models and made it clear that deeper, heavier models are not always the best fit. Lighter models like MobileNetV2 and EfficientNetB1 trained faster, introducing more possibility for improvement, outperformed ResNet50V2 in accuracy and performed equally and/or better with concern to AUC metrics. Ultimately, it was MobileNetV2 that yielded the best results. 
 
 
 ### Future Work
 
-In the future, I'd like to determine the reason behind ResNet's apparent issues during training and potentially correct and re-train it. To further develop my models, I'd like to upsize by using the updated/larger versions of the CSAFE Handwriting Database, as well as try a larger variety of models, more epochs (i.e., greater time and processing investment), and apply more augmentations. One concern I'd sepcifically like to address is resolution and loss of data through resizing and/or cropping; to achieve this, I'd like to attempt pre-cropping images, before images are resized, (also serves to inflate class sizes) and using boundary boxes to detect text to ensure avoidance of excessive whitespace. Ideally, this would also yield a volume of data better suited toward a clean training/validation/testing split.
+In the future, I'd like to determine the reason behind ResNet's apparent issues during training and potentially correct and re-train it. To further develop my models, I'd like to upsize by using the updated/larger versions of the CSAFE Handwriting Database, as well as try a larger variety of models, more epochs (i.e., greater time and processing investment), and apply more augmentations. One concern I'd specifically like to address is resolution and loss of data through resizing and/or cropping; to achieve this, I'd like to attempt pre-cropping images, before images are resized, (also serves to inflate class sizes) and using boundary boxes to detect text to ensure avoidance of excessive whitespace. Ideally, this would also yield a volume of data better suited toward a clean training/validation/testing split.
 
 Another avenue of interest is investigating the minimal amount of layers/neurons/image sizes required to achieve significant, non-trivial results. Additionally, exploring dimensionality and/or feature reduction and identifying possible "writer-specific" features is another aspect of note.
 
@@ -112,8 +112,6 @@ To reproduce the analysis and modeling results:
 * Run all cells
 * Repeat with `Colab_CompareAugmentation.ipynb`, `Colab_ExtraModels_Train.ipynb`, and `Colab_Compare_Models.ipynb`
 
-Alternatively:
-* 
 
 **Note: All steps/modeling can be done locally (e.g., with Jupyter), but this would require modification of existing modules/notebooks/code and proper hardware.* 
 

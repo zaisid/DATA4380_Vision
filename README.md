@@ -1,6 +1,6 @@
 # Handwriting Identification
 
-* This repository holds an attempt to apply transfer learning techniques and convolutional neural nets (CNNs) to model and predict the identity of the writer of a given handwritten image from the [CSAFE Handwriting Database (version 1)](https://data.csafe.iastate.edu/HandwritingDatabase/?saveQueryContent=handwritingdbstudy-%3E++%28Writer_ID+%3C%3D+%270090%27%29+&files%5B%5D=&study=handwritingdbstudy&left-operands-parameters-name=Writer_ID&filter-operators-name=%3D&right-operands-parameters-value=Writer_ID&paramValues=0009#). 
+This repository holds an attempt to apply transfer learning techniques and convolutional neural nets (CNNs) to model and predict the identity of the writer of a given handwritten image from the [CSAFE Handwriting Database (version 1)](https://data.csafe.iastate.edu/HandwritingDatabase/?saveQueryContent=handwritingdbstudy-%3E++%28Writer_ID+%3C%3D+%270090%27%29+&files%5B%5D=&study=handwritingdbstudy&left-operands-parameters-name=Writer_ID&filter-operators-name=%3D&right-operands-parameters-value=Writer_ID&paramValues=0009#). 
 
 ## Overview
 
@@ -14,10 +14,11 @@ This project explores the application of CNNs to the problem of handwriting-base
 * Type: Image data, scans of handwriting samples; .csv file containing metadata on each writer is also included when downloading the data.
 * Size: 2430 images, 1.18 GB, 90 writers (i.e., classes) & 27 images each
 * Instances: an 80/20 train/validation split was used, with stratified sampling to ensure all classes were equally represented in each set; validation data was used for testing as well
+
 *Note: There are multiple "versions"/updates to this dataset; version 1 was used for this attempt.*
 
 #### Preprocessing / Clean Up
-The data required minimal processing. Python scripts were used to organize the image files in directories based on writer IDs, and then further organized into larger train/validation directories (outlined in `reload_data.py`). Image augmentations utilized include random crop (in order to have more focus on writing patterns and get "more" data per person), random contrast (to add variance in "pen strokes"), and random rotations (at small increments). 
+The data required minimal processing. Python scripts using the os and shutil modules were used to organize the image files in directories based on writer IDs, and then further organized into larger train/validation directories (packaged in `reload_data.py`). Image augmentations utilized include random crop (in order to have more focus on writing patterns and get "more" data per person), random contrast (to add variance in "pen strokes"), and random rotations (at small increments). 
 
 
 #### Data Visualization
@@ -36,15 +37,15 @@ Examples of applied augmentations.
 
 ### Problem Formation
 
-The input would be any given image, the output would be the predicted writer/class it belonged to. The initial model trained was a ResNet50V2 model, supplemented to support a multi-class problem. This was the first pick because it seemed to balance size, performance, and time investments. Other models trained were EfficientNetB1 and MobileNetV2. These were primarily chosen because they were smaller and faster than ResNet while promising similar results. The adam optimizer function was used for all 3 models. For most models, the image size used was (384, 384) and the batch size was set at 18; this is exceptioned by the very first model, run in a local environment, with image sizes at (180, 180) and batch sizes of 8.
+The input would be any given image, the output would be the predicted writer/class it belonged to. The initial model trained was a ResNet50V2 model, supplemented to support a multi-class problem. This was the first pick because it seemed to balance size, performance, and time investments. Other models trained were EfficientNetB1 and MobileNetV2. These were primarily chosen because they were smaller and faster than ResNet while promising similar results. The adam optimizer function was used for all 3 models. For most models, the image size used was (384, 384) and the batch size was set at 18; this is exceptioned by the very first model, run in a local environment, with image sizes at (224, 224) and batch sizes of 8.
 
 
 ### Training
 
 The original attempt (in local Jupyter environment) trained a ResNet50V2 model on 10 epochs with an image size of (224,224) and batch sizes of 8. This model trained relatively quickly, in about 12 minutes.
 With Colab's environment and resourcing, the image_size was increased to (384, 384) and batch size to 18. These hyperparameters were used for the remainder of the models.
-The Base ResNet model was trained with 8 epochs. This training session took especially long, taking over 20 mins per epoch. This model was supplemented with augmented image data and trained for an additional 12 epochs (which took approximately 6 mins per epoch).
-The other models utilized (i.e., MobileNetV2 and EfficientNetB1) trained with a similar schedule to the augmented model; 10 epochs each. Training was typically stopped earlier than was ideal (i.e., before loss could plateau), at an arbitrarily set limit, due to time and processing constraints. Initial difficulties, including lost runtime and significantly long training durations, were mitigated mostly through limiting the number of epochs, prefetching the data, switching to Google Colab from local/Jupyter notebook for the brunt of training, as well as eventually exploring smaller models.
+The Base ResNet model was trained with 8 epochs. This training session took especially long, taking over 20 minutes per epoch. This model was supplemented with augmented image data and trained for an additional 12 epochs (which took approximately 6 minutes per epoch).
+The other models utilized (i.e., MobileNetV2 and EfficientNetB1) trained with a similar schedule to the augmented model; 10 epochs each. Training was typically stopped earlier than was ideal (i.e., before loss could plateau), at an arbitrarily set limit, due to time and processing constraints. Initial difficulties, including lost runtime and significantly long training durations, were mitigated mostly through limiting the number of epochs, prefetching the data, switching to Google Colab from local/Jupyter notebook environments for the brunt of training, as well as eventually exploring smaller models.
 
 Base ResNet model loss curve
 
@@ -97,9 +98,7 @@ This project was an exploration of writer identification as an image classificat
 
 ### Future Work
 
-In the future, I'd like to determine the reason behind ResNet's apparent issues during training and potentially correct and re-train it. To further develop my models, I'd like to upsize by using the updated/larger versions of the CSAFE Handwriting Database, as well as try a larger variety of models, more epochs (i.e., greater time and processing investment), and apply more augmentations. One concern I'd specifically like to address is resolution and loss of data through resizing and/or cropping; to achieve this, I'd like to attempt pre-cropping images, before images are resized, (also serves to inflate class sizes) and using boundary boxes to detect text to ensure avoidance of excessive whitespace. Ideally, this would also yield a volume of data better suited toward a clean training/validation/testing split.
-
-Another avenue of interest is investigating the minimal amount of layers/neurons/image sizes required to achieve significant, non-trivial results. Additionally, exploring dimensionality and/or feature reduction and identifying possible "writer-specific" features is another aspect of note.
+In the future, I'd like to determine the reason behind ResNet's apparent issues during training and potentially correct and re-train it. To further develop my models, I'd like to upsize by using the updated/larger versions of the CSAFE Handwriting Database, as well as try a larger variety of models, more epochs (i.e., greater time and processing investment), and apply more augmentations. One concern I'd specifically like to address is resolution and loss of data through resizing and/or cropping; to achieve this, I'd like to attempt pre-cropping images, before images are resized, (also serves to inflate class sizes) and using boundary boxes to detect text to ensure avoidance of excessive whitespace. Ideally, this would also yield a volume of data better suited toward a clean training/validation/testing split. Another avenue of interest is investigating the minimal amount of layers/neurons/image sizes required to achieve significant, non-trivial results. Additionally, exploring dimensionality and/or feature reduction and identifying possible "writer-specific" features is another aspect of note.
 
 
 ## How to Reproduce Results
@@ -133,7 +132,7 @@ Google Colab was used for majority of model training for its computational proce
 
 ### Data
 
-The data can be downloaded on its [CSAFE database webpage](https://data.csafe.iastate.edu/HandwritingDatabase/?saveQueryContent=handwritingdbstudy-%3E++%28Writer_ID+%3C%3D+%270090%27%29+&files%5B%5D=&study=handwritingdbstudy&left-operands-parameters-name=Writer_ID&filter-operators-name=%3D&right-operands-parameters-value=Writer_ID&paramValues=0009#).
+The data can be downloaded on the [CSAFE Handwriting Database webpage](https://data.csafe.iastate.edu/HandwritingDatabase/?saveQueryContent=handwritingdbstudy-%3E++%28Writer_ID+%3C%3D+%270090%27%29+&files%5B%5D=&study=handwritingdbstudy&left-operands-parameters-name=Writer_ID&filter-operators-name=%3D&right-operands-parameters-value=Writer_ID&paramValues=0009#).
 
 
 ## Citations

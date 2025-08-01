@@ -28,6 +28,11 @@ Examples of given image data.
 ![](/Images/example_images.png)
 
 
+Examples of downsampled image data (384x384) used in training.
+
+![](/Images/train_ds_examples.png)
+
+
 Examples of applied augmentations.
 
 ![](/Images/example_augmentation2.png)

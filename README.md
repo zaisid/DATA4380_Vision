@@ -37,7 +37,6 @@ Examples of applied augmentations.
 
 ![](/Images/example_augmentation2.png)
 
-![](/Images/example_augmentation.png)
 
 
 ### Problem Formation
@@ -121,14 +120,14 @@ To reproduce the analysis and modeling results:
 
 
 ### Contents of Repository
-* Vision_Feasibility_ZS.ipynb: Jupyter notebook containing initial exploration of data, including preliminary dataloading setup (refined in future notebooks and `reload_data.py` module)
-* Vision_TrainBaseModel.ipynb: Jupyter notebook containing initial baseline model (ResNet50V2), includes unsuccessful attempts to stratify data; model was trained on unstratified data
-* Colab_Vision_BaselineAttempt.ipynb: shows results from the first Colab model (attempting to establish a baseline model with stratified train/validation sets); runtime disconnected and was lost
-* Colab_Baseline&Augmentations.ipynb: reattempting what was started in `Colab_Vision_BaselineAttempt.ipynb` along with training on augmented data
-* Colab_CompareAugmentation.ipynb: comparing the performance of the Base model (ResNet50V2) with the one supplemented with augmented image data
-* Colab_ExtraModels_Train.ipynb: training additional models, EfficientNetB1 and MobileNetV2
-* Colab_Compare_Models.ipynb: comparing the performance of the Base ResNet model with the EfficientNet and MobileNet models trained in `Colab_ExtraModels_Train.ipynb`
-* reload_data.py: module containing majority of "preprocessing" steps for reloading (includes functions for reorganizing into train/validation directories, visualizing augmentations, etc.) data within Colab environment
+* **Vision_Feasibility_ZS.ipynb**: Jupyter notebook containing initial exploration of data, including preliminary dataloading setup (refined in future notebooks and `reload_data.py` module)
+* **Vision_TrainBaseModel.ipynb**: Jupyter notebook containing initial baseline model (ResNet50V2), includes unsuccessful attempts to stratify data; model was trained on unstratified data
+* **Colab_Vision_BaselineAttempt.ipynb**: shows results from the first Colab model (attempting to establish a baseline model with stratified train/validation sets); runtime disconnected and was lost
+* **Colab_Baseline&Augmentations.ipynb**: reattempting what was started in `Colab_Vision_BaselineAttempt.ipynb` along with training on augmented data
+* **Colab_CompareAugmentation.ipynb**: comparing the performance of the Base model (ResNet50V2) with the one supplemented with augmented image data
+* **Colab_ExtraModels_Train.ipynb**: training additional models, EfficientNetB1 and MobileNetV2
+* **Colab_Compare_Models.ipynb**: comparing the performance of the Base ResNet model with the EfficientNet and MobileNet models trained in `Colab_ExtraModels_Train.ipynb`
+* **reload_data.py**: module containing majority of "preprocessing" steps for reloading (includes functions for reorganizing into train/validation directories, visualizing augmentations, etc.) data within Colab environment
 
 
 ### Software Setup

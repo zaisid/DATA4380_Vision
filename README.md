@@ -35,7 +35,7 @@ Examples of downsampled image data (384x384) used in training.
 
 Examples of applied augmentations.
 
-![](/Images/augment_example.png)
+![](/Images/augment_example_0.png)
 
 ![](/Images/augment_example_1.png)
 
